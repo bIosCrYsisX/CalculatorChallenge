@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtNumberThree;
     TextView txtNumberFour;
 
-    int counter = 30;
+    int counter = 10;
 
     MainController mainController;
     MainModel mainModel;
@@ -42,13 +42,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     txtTimeLeft.setText(String.format(Locale.getDefault(), getString(R.string.number), counter));
-                    counter--;
-
                     if(counter==0)
                     {
-                        Toast.makeText(getApplicationContext(), "Game over!", Toast.LENGTH_SHORT).show();
+                        mainController.gameOver();
                         return;
                     }
+                    counter--;
                     handler.postDelayed(runnable, 1000);
                 }
             };
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public void update(MainModel mainModel)
     {
         this.mainModel = mainModel;
-        counter = 30;
+        counter = 10;
         txtCalculation.setText((String.format(Locale.getDefault(), getString(R.string.number), mainModel.getNumberOneCalc())) + mainModel.getOperatorText() + String.format(Locale.getDefault(), getString(R.string.number), mainModel.getNumberTwoCalc()));
         txtNumberOne.setText(String.format(Locale.getDefault(), getString(R.string.number), mainModel.getAnswerNumberOne()));
         txtNumberTwo.setText(String.format(Locale.getDefault(), getString(R.string.number), mainModel.getAnswerNumberTwo()));

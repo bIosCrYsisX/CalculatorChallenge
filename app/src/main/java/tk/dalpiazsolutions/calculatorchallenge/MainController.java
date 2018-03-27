@@ -96,17 +96,8 @@ public class MainController {
         }
 
         mainModel.setCounter(mainModel.getCounter() + 1);
-
-        if(mainModel.getGameCounter() < 9)
-        {
-            mainModel.setGameCounter(mainModel.getGameCounter() + 1);
-            this.startCalc();
-        }
-
-        else
-        {
-            gameOver();
-        }
+        mainModel.setGameCounter(mainModel.getGameCounter() + 1);
+        this.startCalc();
     }
 
     public void gameOver()
