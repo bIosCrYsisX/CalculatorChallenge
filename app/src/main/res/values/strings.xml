@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CalculatorChallenge</string>
+    <string name="number">%1$d</string>
+    <string name="standings">%1$d/%2$d</string>
+</resources>
