@@ -12,12 +12,14 @@
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="?android:attr/colorFocusedHighlight"
         android:gravity="center"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/textNumberOne"
@@ -26,10 +28,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/holo_purple"
         android:gravity="center"
         android:onClick="onClick"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
@@ -41,10 +44,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/holo_green_dark"
         android:gravity="center"
         android:onClick="onClick"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
@@ -56,10 +60,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="?android:attr/colorPressedHighlight"
         android:gravity="center"
         android:onClick="onClick"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textNumberOne" />
@@ -71,10 +76,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="?android:attr/textColorLink"
         android:gravity="center"
         android:onClick="onClick"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/textNumberTwo" />
@@ -99,10 +105,13 @@
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/holo_blue_bright"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="8dp" />
 
     <TextView
         android:id="@+id/textCalculations"
@@ -111,9 +120,10 @@
         android:layout_marginBottom="70dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@android:color/holo_red_light"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -7,18 +7,18 @@ package tk.dalpiazsolutions.calculatorchallenge;
 public class MainModel {
 
     private MainActivity mainActivity;
-    int numberOneCalc;
-    int numberTwoCalc;
-    int operatorCalc;
-    int result;
-    int answerNumberOne;
-    int answerNumberTwo;
-    int answerNumberThree;
-    int answerNumberFour;
-    int correctCounter;
-    int counter;
-    int gameCounter = 0;
-    String operatorText;
+    private int numberOneCalc;
+    private int numberTwoCalc;
+    private int operatorCalc;
+    private int result;
+    private int answerNumberOne;
+    private int answerNumberTwo;
+    private int answerNumberThree;
+    private int answerNumberFour;
+    private int correctCounter;
+    private int counter;
+    private int gameCounter = 0;
+    private String operatorText;
 
     public MainModel(MainActivity mainActivity)
     {

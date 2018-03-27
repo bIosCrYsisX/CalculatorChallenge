@@ -3,7 +3,6 @@ package tk.dalpiazsolutions.calculatorchallenge;
 import android.widget.Toast;
 
 import java.util.Random;
-import java.util.logging.Handler;
 
 /**
  * Created by Christoph on 27.03.2018.
@@ -13,10 +12,8 @@ public class MainController {
 
     private MainActivity mainActivity;
     private MainModel mainModel;
-    Random random = new Random();
-    int randomCorrectAnswer;
-    int result;
-
+    private Random random = new Random();
+    private int result;
 
     public MainController(MainActivity mainActivity)
     {
@@ -56,35 +53,48 @@ public class MainController {
             case 0: result = mainModel.getNumberOneCalc() + mainModel.getNumberTwoCalc(); mainModel.setOperatorText("+"); break;
             case 1: result = mainModel.getNumberOneCalc() - mainModel.getNumberTwoCalc(); mainModel.setOperatorText("-"); break;
             case 2: result = mainModel.getNumberOneCalc() * mainModel.getNumberTwoCalc(); mainModel.setOperatorText("*"); break;
-            case 3: while (mainModel.getNumberTwoCalc()==0) { calcRandomNumberTwo(); }  result = Math.round(mainModel.getNumberOneCalc() / (float) mainModel.getNumberTwoCalc()); mainModel.setOperatorText("/");  break;
+            case 3: while (mainModel.getNumberTwoCalc() == 0)
+                    {
+                        calcRandomNumberTwo();
+                    }
+
+                    while(checkRest(mainModel.getNumberOneCalc(), mainModel.getNumberTwoCalc()) != 0)
+                    {
+                        calcRandomNumberOne();
+                    }
+                    result = Math.round(mainModel.getNumberOneCalc() / (float) mainModel.getNumberTwoCalc());
+                    mainModel.setOperatorText("/");
+                    break;
         }
         mainModel.setResult(result);
     }
 
     public void calcAnswers()
     {
-        randomCorrectAnswer = random.nextInt(4);
-
-        switch (randomCorrectAnswer){
+        switch (random.nextInt(4)){
             case 0: mainModel.setAnswerNumberOne(mainModel.getResult());
-                    mainModel.setAnswerNumberTwo(random.nextInt(20));
-                    mainModel.setAnswerNumberThree(random.nextInt(20));
-                    mainModel.setAnswerNumberFour(random.nextInt(20));
+                    mainModel.setAnswerNumberTwo(generateRandomAnswer());
+                    mainModel.setAnswerNumberThree(generateRandomAnswer());
+                    mainModel.setAnswerNumberFour(generateRandomAnswer());
+                    break;
 
             case 1: mainModel.setAnswerNumberTwo(mainModel.getResult());
-                    mainModel.setAnswerNumberOne(random.nextInt(20));
-                    mainModel.setAnswerNumberThree(random.nextInt(20));
-                    mainModel.setAnswerNumberFour(random.nextInt(20));
+                    mainModel.setAnswerNumberOne(generateRandomAnswer());
+                    mainModel.setAnswerNumberThree(generateRandomAnswer());
+                    mainModel.setAnswerNumberFour(generateRandomAnswer());
+                    break;
 
             case 2: mainModel.setAnswerNumberThree(mainModel.getResult());
-                    mainModel.setAnswerNumberOne(random.nextInt(20));
-                    mainModel.setAnswerNumberTwo(random.nextInt(20));
-                    mainModel.setAnswerNumberFour(random.nextInt(20));
+                    mainModel.setAnswerNumberOne(generateRandomAnswer());
+                    mainModel.setAnswerNumberTwo(generateRandomAnswer());
+                    mainModel.setAnswerNumberFour(generateRandomAnswer());
+                    break;
 
             case 3: mainModel.setAnswerNumberFour(mainModel.getResult());
-                    mainModel.setAnswerNumberOne(random.nextInt(20));
-                    mainModel.setAnswerNumberTwo(random.nextInt(20));
-                    mainModel.setAnswerNumberThree(random.nextInt(20));
+                    mainModel.setAnswerNumberOne(generateRandomAnswer());
+                    mainModel.setAnswerNumberTwo(generateRandomAnswer());
+                    mainModel.setAnswerNumberThree(generateRandomAnswer());
+                    break;
         }
     }
 
@@ -103,5 +113,30 @@ public class MainController {
     public void gameOver()
     {
         Toast.makeText(mainActivity.getApplicationContext(), "Game over!", Toast.LENGTH_LONG).show();
+    }
+
+    public int generateRandomAnswer()
+    {
+        int randomNumber = random.nextInt(5);
+
+        if(mainModel.getResult() <= 10)
+        {
+            while(randomNumber == mainModel.getResult())
+            {
+                randomNumber = random.nextInt(5);
+            }
+
+            return randomNumber;
+        }
+
+        else
+        {
+            return ((random.nextInt((int)(mainModel.getResult() * 0.5)) + ((int)(mainModel.getResult() * 0.5))));
+        }
+    }
+
+    public int checkRest(int a, int b)
+    {
+        return (a % b);
     }
 }
