@@ -15,9 +15,7 @@ public class MainModel {
     private int answerNumberTwo;
     private int answerNumberThree;
     private int answerNumberFour;
-    private int correctCounter;
     private int counter;
-    private int gameCounter = 0;
     private String operatorText;
 
     public MainModel(MainActivity mainActivity)
@@ -104,13 +102,6 @@ public class MainModel {
         mainActivity.update(this);
     }
 
-    public int getCorrectCounter() {
-        return correctCounter;
-    }
-
-    public void setCorrectCounter(int correctCounter) {
-        this.correctCounter = correctCounter;
-    }
 
     public int getCounter() {
         return counter;
@@ -120,11 +111,4 @@ public class MainModel {
         this.counter = counter;
     }
 
-    public int getGameCounter() {
-        return gameCounter;
-    }
-
-    public void setGameCounter(int gameCounter) {
-        this.gameCounter = gameCounter;
-    }
 }

@@ -50,12 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     txtTimeLeft.setText(String.format(Locale.getDefault(), getString(R.string.number), counter));
                     if(counter==0)
                     {
-                        txtNumberOne.setClickable(false);
-                        txtNumberTwo.setClickable(false);
-                        txtNumberThree.setClickable(false);
-                        txtNumberFour.setClickable(false);
-                        mainController.gameOver();
-                        mbuttonPlayAgain.setVisibility(View.VISIBLE);
+                        mainController.kill();
                         return;
                     }
                     counter--;
@@ -90,11 +85,20 @@ public class MainActivity extends AppCompatActivity {
     {
         TextView textView = (TextView) view;
         mainController.checkAnswer(Integer.parseInt(textView.getText().toString()));
-        txtStandings.setText(String.format(Locale.getDefault(), getString(R.string.standings), mainModel.getCorrectCounter(), mainModel.getCounter()));
+        txtStandings.setText(String.format(Locale.getDefault(), getString(R.string.number), mainModel.getCounter()));
     }
 
     public void playAgain(View view)
     {
         this.recreate();
+    }
+
+    public void gameOver()
+    {
+        txtNumberOne.setClickable(false);
+        txtNumberTwo.setClickable(false);
+        txtNumberThree.setClickable(false);
+        txtNumberFour.setClickable(false);
+        mbuttonPlayAgain.setVisibility(View.VISIBLE);
     }
 }

@@ -1,7 +1,7 @@
 package tk.dalpiazsolutions.calculatorchallenge;
 
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +19,19 @@ public class MainController {
     private MainModel mainModel;
     private Random random = new Random();
     private int result;
+    private int lifeCounter = 3;
+    ImageView lifeOne;
+    ImageView lifeTwo;
+    ImageView lifeThree;
 
     public MainController(MainActivity mainActivity)
     {
         this.mainActivity = mainActivity;
         mainModel = new MainModel(mainActivity);
         txtState = mainActivity.findViewById(R.id.textState);
+        lifeOne = mainActivity.findViewById(R.id.imageLifeOne);
+        lifeTwo = mainActivity.findViewById(R.id.imageLifeTwo);
+        lifeThree = mainActivity.findViewById(R.id.imageLifeThree);
     }
 
     public void startCalc()
@@ -109,22 +116,21 @@ public class MainController {
         if(answer == mainModel.getResult())
         {
             txtState.setText(mainActivity.getString(R.string.correct));
-            mainModel.setCorrectCounter(mainModel.getCorrectCounter() + 1);
+            mainModel.setCounter(mainModel.getCounter() + 1);
         }
 
         else
         {
             txtState.setText(mainActivity.getString(R.string.wrong));
+            kill();
         }
 
-        mainModel.setCounter(mainModel.getCounter() + 1);
-        mainModel.setGameCounter(mainModel.getGameCounter() + 1);
         this.startCalc();
     }
 
     public void gameOver()
     {
-        txtState.setText(String.format(Locale.getDefault(), mainActivity.getString(R.string.endState), mainModel.getCorrectCounter(), mainModel.getCounter()));
+        txtState.setText(String.format(Locale.getDefault(), mainActivity.getString(R.string.number), mainModel.getCounter()));
         Toast.makeText(mainActivity.getApplicationContext(), "Game over!", Toast.LENGTH_LONG).show();
 
     }
@@ -154,5 +160,24 @@ public class MainController {
         return (a % b);
     }
 
+    public void kill()
+    {
+        lifeCounter--;
+        if(lifeCounter==2)
+        {
+            lifeThree.setVisibility(View.GONE);
+        }
 
+        else if(lifeCounter==1)
+        {
+            lifeTwo.setVisibility(View.GONE);
+        }
+
+        else if(lifeCounter==0)
+        {
+            lifeOne.setVisibility(View.GONE);
+            mainActivity.gameOver();
+            gameOver();
+        }
+    }
 }

@@ -3,7 +3,6 @@
     <string name="number">%1$d</string>
     <string name="standings">%1$d / %2$d</string>
     <string name="playagain">Play again!</string>
-    <string name="endState">Your score: %1$d / %2$d</string>
     <string name="correct">Correct!</string>
     <string name="wrong">False!</string>
 </resources>
