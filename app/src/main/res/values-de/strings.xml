@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mathe-Herausforderung</string>
+    <string name="number">%1$d</string>
+    <string name="endScore">Dein Ergebnis: %1$d</string>
+    <string name="highScore">Neuer Highscore!</string>
+    <string name="highScoreValue">Highscore: %1$d</string>
+    <string name="start">Start</string>
+    <string name="calculation">%1$d %2$s %3$d</string>
+    <string name="playagain">Erneut spielen!</string>
+    <string name="correct">Richtig!</string>
+    <string name="wrong">Falsch!</string>
+</resources>

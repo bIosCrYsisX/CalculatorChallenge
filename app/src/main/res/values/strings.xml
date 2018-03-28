@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Math Challenge</string>
+    <string name="app_name">Math-Challenge</string>
     <string name="number">%1$d</string>
     <string name="endScore">Your score: %1$d</string>
     <string name="highScore">New Highscore!</string>

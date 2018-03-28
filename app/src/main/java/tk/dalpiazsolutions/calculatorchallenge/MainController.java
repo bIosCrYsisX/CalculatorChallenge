@@ -109,6 +109,7 @@ public class MainController {
         {
             txtState.setText(mainActivity.getString(R.string.correct));
             mainModel.setCounter(mainModel.getCounter() + 1);
+            startCalc();
         }
 
         else
@@ -116,8 +117,6 @@ public class MainController {
             txtState.setText(mainActivity.getString(R.string.wrong));
             kill();
         }
-        timerThread.setStopThread(true);
-        this.startCalc();
     }
 
     public void gameOver()
@@ -165,20 +164,22 @@ public class MainController {
         if(timerThread.getLifeCounter()==2)
         {
             lifeThree.setVisibility(View.GONE);
+            startCalc();
         }
 
         else if(timerThread.getLifeCounter()==1)
         {
             lifeTwo.setVisibility(View.GONE);
+            startCalc();
         }
 
         else if(timerThread.getLifeCounter()==0)
         {
             lifeOne.setVisibility(View.GONE);
+            timerThread.setStopThread(true);
             mainActivity.gameOver();
             gameOver();
         }
-        timerThread.setStopThread(true);
     }
 
     public void setDifficulty()
