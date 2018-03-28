@@ -16,6 +16,7 @@ public class MainModel {
     private int answerNumberThree;
     private int answerNumberFour;
     private int counter;
+    private int difficulty;
     private String operatorText;
 
     public MainModel(MainActivity mainActivity)
@@ -102,13 +103,21 @@ public class MainModel {
         mainActivity.update(this);
     }
 
-
     public int getCounter() {
         return counter;
     }
 
     public void setCounter(int counter) {
         this.counter = counter;
+    }
+
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 
 }

@@ -1,7 +1,6 @@
 package tk.dalpiazsolutions.calculatorchallenge;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    Handler handler = new Handler();
-
     TextView txtStandings;
     TextView txtCalculation;
     TextView txtNumberOne;
@@ -19,8 +16,6 @@ public class MainActivity extends AppCompatActivity {
     TextView txtNumberThree;
     TextView txtNumberFour;
     Button mbuttonPlayAgain;
-
-    int counter = 10;
 
     MainController mainController;
     MainModel mainModel;
@@ -40,48 +35,16 @@ public class MainActivity extends AppCompatActivity {
 
         mbuttonPlayAgain.setVisibility(View.GONE);
 
-        txtStandings.setText("0/0");
-
-        final Thread thread = new Thread() {
-            TextView txtTimeLeft = findViewById(R.id.textTimeLeft);
-            final Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    txtTimeLeft.setText(String.format(Locale.getDefault(), getString(R.string.number), counter));
-                    if(counter==0)
-                    {
-                        mainController.kill();
-                        if(mainController.lifeCounter==0) {
-                            return;
-                        }
-
-                        else
-                        {
-                            mainController.startCalc();
-                        }
-                    }
-                    counter--;
-                    handler.postDelayed(runnable, 1000);
-                }
-            };
-
-            @Override
-            public void run() {
-                super.run();
-                handler.postDelayed(runnable, 0);
-            }
-        };
+        txtStandings.setText("0");
 
         mainController = new MainController(this);
         mainController.startCalc();
-        thread.start();
     }
 
     public void update(MainModel mainModel)
     {
         this.mainModel = mainModel;
-        counter = 10;
-        txtCalculation.setText((String.format(Locale.getDefault(), getString(R.string.number), mainModel.getNumberOneCalc())) + mainModel.getOperatorText() + String.format(Locale.getDefault(), getString(R.string.number), mainModel.getNumberTwoCalc()));
+        txtCalculation.setText((String.format(Locale.getDefault(), getString(R.string.calculation), mainModel.getNumberOneCalc(), mainModel.getOperatorText(), mainModel.getNumberTwoCalc())));
         txtNumberOne.setText(String.format(Locale.getDefault(), getString(R.string.number), mainModel.getAnswerNumberOne()));
         txtNumberTwo.setText(String.format(Locale.getDefault(), getString(R.string.number), mainModel.getAnswerNumberTwo()));
         txtNumberThree.setText(String.format(Locale.getDefault(), getString(R.string.number), mainModel.getAnswerNumberThree()));
@@ -102,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void gameOver()
     {
-        txtNumberOne.setClickable(false);
-        txtNumberTwo.setClickable(false);
-        txtNumberThree.setClickable(false);
-        txtNumberFour.setClickable(false);
+        txtNumberOne.setEnabled(false);
+        txtNumberTwo.setEnabled(false);
+        txtNumberThree.setEnabled(false);
+        txtNumberFour.setEnabled(false);
         mbuttonPlayAgain.setVisibility(View.VISIBLE);
     }
 }

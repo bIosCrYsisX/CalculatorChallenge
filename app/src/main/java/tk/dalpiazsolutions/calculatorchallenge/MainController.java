@@ -17,12 +17,13 @@ public class MainController {
     private TextView txtState;
     private MainActivity mainActivity;
     private MainModel mainModel;
+    private TimerThread timerThread;
     private Random random = new Random();
     private int result;
-    int lifeCounter = 3;
-    ImageView lifeOne;
-    ImageView lifeTwo;
-    ImageView lifeThree;
+    private ImageView lifeOne;
+    private ImageView lifeTwo;
+    private ImageView lifeThree;
+    private PreferenceManager preferenceManager;
 
     public MainController(MainActivity mainActivity)
     {
@@ -32,31 +33,27 @@ public class MainController {
         lifeOne = mainActivity.findViewById(R.id.imageLifeOne);
         lifeTwo = mainActivity.findViewById(R.id.imageLifeTwo);
         lifeThree = mainActivity.findViewById(R.id.imageLifeThree);
+        preferenceManager = new PreferenceManager(mainActivity);
+        timerThread = new TimerThread(mainActivity, this);
+        timerThread.setLifeCounter(3);
+        timerThread.run();
     }
 
     public void startCalc()
     {
-        calcRandomNumberOne();
-        calcRandomNumberTwo();
-        calcOperator();
+        timerThread.setStopThread(false);
+        setDifficulty();
+        calcNumbers();
         calcResult();
         calcAnswers();
         mainModel.setTexts();
     }
 
-    public void calcOperator()
+    public void calcNumbers()
     {
-        mainModel.setOperatorCalc(random.nextInt(4));
-    }
-
-    public void calcRandomNumberOne()
-    {
-        mainModel.setNumberOneCalc(random.nextInt(21));
-    }
-
-    public void calcRandomNumberTwo()
-    {
-        mainModel.setNumberTwoCalc(random.nextInt(21));
+        mainModel.setNumberOneCalc(calcRandomNumber(0));
+        mainModel.setNumberTwoCalc(calcRandomNumber(1));
+        mainModel.setOperatorCalc(calcRandomNumber(2));
     }
 
     public void calcResult()
@@ -66,16 +63,11 @@ public class MainController {
             case 0: result = mainModel.getNumberOneCalc() + mainModel.getNumberTwoCalc(); mainModel.setOperatorText("+"); break;
             case 1: result = mainModel.getNumberOneCalc() - mainModel.getNumberTwoCalc(); mainModel.setOperatorText("-"); break;
             case 2: result = mainModel.getNumberOneCalc() * mainModel.getNumberTwoCalc(); mainModel.setOperatorText("*"); break;
-            case 3: while (mainModel.getNumberTwoCalc() == 0)
+            case 3: while(checkRest(mainModel.getNumberOneCalc(), mainModel.getNumberTwoCalc()) != 0)
                     {
-                        calcRandomNumberTwo();
+                        mainModel.setNumberOneCalc(calcRandomNumber(1));
                     }
-
-                    while(checkRest(mainModel.getNumberOneCalc(), mainModel.getNumberTwoCalc()) != 0)
-                    {
-                        calcRandomNumberOne();
-                    }
-                    result = Math.round(mainModel.getNumberOneCalc() / (float) mainModel.getNumberTwoCalc());
+                    result = mainModel.getNumberOneCalc() / mainModel.getNumberTwoCalc();
                     mainModel.setOperatorText("/");
                     break;
         }
@@ -124,15 +116,22 @@ public class MainController {
             txtState.setText(mainActivity.getString(R.string.wrong));
             kill();
         }
-
+        timerThread.setStopThread(true);
         this.startCalc();
     }
 
     public void gameOver()
     {
-        txtState.setText(String.format(Locale.getDefault(), mainActivity.getString(R.string.number), mainModel.getCounter()));
+        txtState.setText(String.format(Locale.getDefault(), mainActivity.getString(R.string.endScore), mainModel.getCounter()));
         Toast.makeText(mainActivity.getApplicationContext(), "Game over!", Toast.LENGTH_LONG).show();
 
+        preferenceManager.loadPrefs();
+        if(mainModel.getCounter() > preferenceManager.getHighScore())
+        {
+            preferenceManager.setHighScore(mainModel.getCounter());
+            Toast.makeText(mainActivity.getApplicationContext(), mainActivity.getString(R.string.highScore), Toast.LENGTH_LONG).show();
+        }
+        timerThread.setStopThread(true);
     }
 
     public int generateRandomAnswer()
@@ -162,22 +161,122 @@ public class MainController {
 
     public void kill()
     {
-        lifeCounter--;
-        if(lifeCounter==2)
+        timerThread.setLifeCounter(timerThread.getLifeCounter() - 1);
+        if(timerThread.getLifeCounter()==2)
         {
             lifeThree.setVisibility(View.GONE);
         }
 
-        else if(lifeCounter==1)
+        else if(timerThread.getLifeCounter()==1)
         {
             lifeTwo.setVisibility(View.GONE);
         }
 
-        else if(lifeCounter==0)
+        else if(timerThread.getLifeCounter()==0)
         {
             lifeOne.setVisibility(View.GONE);
             mainActivity.gameOver();
             gameOver();
+        }
+        timerThread.setStopThread(true);
+    }
+
+    public void setDifficulty()
+    {
+        mainModel.setDifficulty(0);
+        timerThread.setTimeCounter(20);
+
+        if(mainModel.getCounter() > 10 && mainModel.getCounter() <= 20)
+        {
+            mainModel.setDifficulty(1);
+            timerThread.setTimeCounter(15);
+        }
+
+        else if(mainModel.getCounter() > 20 && mainModel.getCounter() <= 30)
+        {
+            mainModel.setDifficulty(2);
+            timerThread.setTimeCounter(10);
+        }
+
+        else if(mainModel.getCounter() > 30)
+        {
+            mainModel.setDifficulty(3);
+            timerThread.setTimeCounter(5);
+        }
+    }
+
+    public int calcRandomNumber(int mode)
+    {
+        if(mainModel.getDifficulty() == 0)
+        {
+            if(mode == 1)
+            {
+                return (random.nextInt(10) + 1);
+            }
+
+            else if (mode == 2)
+            {
+                return random.nextInt(2);
+            }
+
+            else
+            {
+                return random.nextInt(11);
+            }
+        }
+
+        else if(mainModel.getDifficulty() == 1)
+        {
+            if(mode == 1)
+            {
+                return (random.nextInt(10) + 1);
+            }
+
+            else if (mode == 2)
+            {
+                return random.nextInt(3);
+            }
+
+            else
+            {
+                return random.nextInt(11);
+            }
+        }
+
+        else if(mainModel.getDifficulty() == 2)
+        {
+            if(mode == 1)
+            {
+                return (random.nextInt(10) + 1);
+            }
+
+            else if (mode == 2)
+            {
+                return random.nextInt(4);
+            }
+
+            else
+            {
+                return random.nextInt(11);
+            }
+        }
+
+        else
+        {
+            if(mode == 1)
+            {
+                return (random.nextInt(20) + 1);
+            }
+
+            else if (mode == 2)
+            {
+                return random.nextInt(4);
+            }
+
+            else
+            {
+                return random.nextInt(21);
+            }
         }
     }
 }
