@@ -1,7 +1,11 @@
 package tk.dalpiazsolutions.calculatorchallenge;
 
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -10,6 +14,7 @@ import java.util.Random;
 
 public class MainController {
 
+    private TextView txtState;
     private MainActivity mainActivity;
     private MainModel mainModel;
     private Random random = new Random();
@@ -19,6 +24,7 @@ public class MainController {
     {
         this.mainActivity = mainActivity;
         mainModel = new MainModel(mainActivity);
+        txtState = mainActivity.findViewById(R.id.textState);
     }
 
     public void startCalc()
@@ -102,7 +108,13 @@ public class MainController {
     {
         if(answer == mainModel.getResult())
         {
+            txtState.setText(mainActivity.getString(R.string.correct));
             mainModel.setCorrectCounter(mainModel.getCorrectCounter() + 1);
+        }
+
+        else
+        {
+            txtState.setText(mainActivity.getString(R.string.wrong));
         }
 
         mainModel.setCounter(mainModel.getCounter() + 1);
@@ -112,7 +124,9 @@ public class MainController {
 
     public void gameOver()
     {
+        txtState.setText(String.format(Locale.getDefault(), mainActivity.getString(R.string.endState), mainModel.getCorrectCounter(), mainModel.getCounter()));
         Toast.makeText(mainActivity.getApplicationContext(), "Game over!", Toast.LENGTH_LONG).show();
+
     }
 
     public int generateRandomAnswer()
@@ -139,4 +153,6 @@ public class MainController {
     {
         return (a % b);
     }
+
+
 }

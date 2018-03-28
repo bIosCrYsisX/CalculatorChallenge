@@ -1,11 +1,11 @@
 package tk.dalpiazsolutions.calculatorchallenge;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtNumberTwo;
     TextView txtNumberThree;
     TextView txtNumberFour;
+    Button mbuttonPlayAgain;
 
     int counter = 10;
 
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         txtNumberTwo = findViewById(R.id.textNumberTwo);
         txtNumberThree = findViewById(R.id.textNumberThree);
         txtNumberFour = findViewById(R.id.textNumberFour);
+        mbuttonPlayAgain = findViewById(R.id.buttonPlayAgain);
+
+        mbuttonPlayAgain.setVisibility(View.GONE);
+
+        txtStandings.setText("0/0");
 
         final Thread thread = new Thread() {
             TextView txtTimeLeft = findViewById(R.id.textTimeLeft);
@@ -44,7 +50,12 @@ public class MainActivity extends AppCompatActivity {
                     txtTimeLeft.setText(String.format(Locale.getDefault(), getString(R.string.number), counter));
                     if(counter==0)
                     {
+                        txtNumberOne.setClickable(false);
+                        txtNumberTwo.setClickable(false);
+                        txtNumberThree.setClickable(false);
+                        txtNumberFour.setClickable(false);
                         mainController.gameOver();
+                        mbuttonPlayAgain.setVisibility(View.VISIBLE);
                         return;
                     }
                     counter--;
@@ -80,5 +91,10 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = (TextView) view;
         mainController.checkAnswer(Integer.parseInt(textView.getText().toString()));
         txtStandings.setText(String.format(Locale.getDefault(), getString(R.string.standings), mainModel.getCorrectCounter(), mainModel.getCounter()));
+    }
+
+    public void playAgain(View view)
+    {
+        this.recreate();
     }
 }
