@@ -19,7 +19,7 @@ public class MainController {
     private MainModel mainModel;
     private Random random = new Random();
     private int result;
-    private int lifeCounter = 3;
+    int lifeCounter = 3;
     ImageView lifeOne;
     ImageView lifeTwo;
     ImageView lifeThree;

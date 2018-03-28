@@ -51,7 +51,14 @@ public class MainActivity extends AppCompatActivity {
                     if(counter==0)
                     {
                         mainController.kill();
-                        return;
+                        if(mainController.lifeCounter==0) {
+                            return;
+                        }
+
+                        else
+                        {
+                            mainController.startCalc();
+                        }
                     }
                     counter--;
                     handler.postDelayed(runnable, 1000);
