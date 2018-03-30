@@ -122,7 +122,7 @@ public class MainController {
     public void gameOver()
     {
         txtState.setText(String.format(Locale.getDefault(), mainActivity.getString(R.string.endScore), mainModel.getCounter()));
-        Toast.makeText(mainActivity.getApplicationContext(), "Game over!", Toast.LENGTH_LONG).show();
+        Toast.makeText(mainActivity.getApplicationContext(), mainActivity.getString(R.string.gameover), Toast.LENGTH_LONG).show();
 
         preferenceManager.loadPrefs();
         if(mainModel.getCounter() > preferenceManager.getHighScore())

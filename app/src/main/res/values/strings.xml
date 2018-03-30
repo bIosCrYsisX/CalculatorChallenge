@@ -9,4 +9,5 @@
     <string name="playagain">Play again!</string>
     <string name="correct">Correct!</string>
     <string name="wrong">False!</string>
+    <string name="gameover">Game over!</string>
 </resources>
